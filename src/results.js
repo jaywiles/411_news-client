@@ -35,11 +35,11 @@ class Results extends Component {
   render() {
     const stories = this.state.stories;
 
-    if (this.state.stories.length > 0) {
+    if (stories.length > 0) {
       return (
         <h1>Woohoo! Something is happening!</h1>
       )
-    } else {
+    } else if (stories.length === 0) {
       return (
         <h1>No results found. Please search again.</h1>
       )
