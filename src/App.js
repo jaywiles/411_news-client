@@ -28,7 +28,9 @@ class App extends Component {
       // trying for line to below to check if searchWords is blank... if so, don't setState
       searchWords: !""
     }))
+    .catch(error => console.log("search parsing failed", error))
   }
+
 
 
 }
