@@ -5,15 +5,17 @@ import Search from "./search"
 import Results from "./results"
 
 class App extends Component {
-  // onSubmit = fields => {
-  //   console.log("App: ", fields)
-  // }
-  state = {
-    fields: {},
-    stories: []
+  constructor(props) {
+    super(props);
+    this.state = {
+      fields: {},
+      stories: [],
+      searchWords: null,
+      // updatedValue: "obama"
+    }
   }
 
-  onSubmit = updatedValue => {
+  onChange = updatedValue => {
     this.setState({
       fields: {
         ...this.state.fields,
@@ -22,10 +24,26 @@ class App extends Component {
     })
   }
 
+  // onSubmit = updatedValue => {
+  //   this.setState({
+  //     fields: {
+  //       ...this.state.fields,
+  //       ...updatedValue
+  //     }
+  //   })
+  // }
+
+  // onChangeValue(newName) {
+  //   this.setState({
+  //     homeLink: newName
+  //   });
+  // }
+
   showResults = storyList => {
     this.setState({
       stories: {
         ...this.state.stories,
+        ...storyList
       }
     })
   }
@@ -34,8 +52,9 @@ class App extends Component {
     return (
       <div className="container">
         <h1>Search stories</h1>
-        <Search onSubmit={fields => this.onSubmit(fields)}></Search>
-        <Results >{console.log(this.state.stories.length)}</Results>
+        {/* <div homeLink={this.state.homeLink}></div> */}
+        <Search onChange={fields => this.onChange(fields)}></Search>
+        <Results showResults={this.state.stories}>{console.log(this.state.stories.length)}</Results>
       </div>
     )
   }

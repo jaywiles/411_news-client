@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
 import Search from "./search"
+import App from './App';
 
 class Results extends Component {
-  state = {
-    fields: {},
-    stories: []
+  constructor(props) {
+    super(props);
+    this.state = {
+      fields: {},
+      stories: [],
+      // searchWords: null
+    }
   }
 
   componentDidMount() {
@@ -12,11 +17,12 @@ class Results extends Component {
   }
 
   fetchStories() {
-    // fetch (`http://hn.algolia.com/api/v1/search?query=${this.searchWords}&tags=story`)
-    // below is fetch for testing
-    fetch (`http://hn.algolia.com/api/v1/search?query=obama&tags=story`)
+    fetch (`http://hn.algolia.com/api/v1/search?query=${`obama`}&tags=story`)
+    // ${this.props.searchWords(this.state.homeLink)}
+    // below is fetch for word "obama" for testing
+    // fetch (`http://hn.algolia.com/api/v1/search?query=obama&tags=story`)
     .then(response => response.json())
-    .then(parsedJSON => parsedJSON.map (story => ({
+    .then(parsedJSON => parsedJSON.hits.map (story => ({
       timeCreatedUnix: `${story.created_at_i}`,
       timeCreatedClock: `${story.created_at}`,
       title: `${story.title}`,
@@ -35,15 +41,27 @@ class Results extends Component {
   render() {
     const stories = this.state.stories;
 
+    console.log(stories.length)
+
     if (stories.length > 0) {
       return (
-        <h1>Woohoo! Something is happening!</h1>
+        stories.map(story => {
+          const {title, author, url, timeCreatedClock, timeCreatedUnix} = story;
+          return (
+            <div key={timeCreatedUnix}>
+              <p><a href={url}>{title}</a> by {author}</p>
+              <p>Published: {timeCreatedClock}</p>
+              <br></br>
+            </div>
+          )
+        })
       )
     } else if (stories.length === 0) {
       return (
         <h1>No results found. Please search again.</h1>
       )
     }
+    // need else if here to say else if submit has not been pushed, don't show anything
   }
 
 

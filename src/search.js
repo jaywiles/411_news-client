@@ -1,23 +1,27 @@
 import React, { Component } from 'react';
 
 class Search extends Component {
-  state = {
-    searchWords: "",
-    // searchDates: "",
-    // searchAuthor: "",
+  constructor(props) {
+    super(props);
+    this.state = {
+      searchWords: "",
+      // searchDates: "",
+      // searchAuthor: "",
+    }
   }
 
   change = e => {
     // this.props.onChange({ [e.target.name]: e.target.value});
+    // const inputText = `${this.state.searchWords}`
     this.setState({
       [e.target.name]: e.target.value
+      // message: inputText
     })
   }
 
-  onSubmit = (e) => {
+  onSubmit = e => {
     // e.preventDefault();
-    // console.log(this.state);
-    // this.props.onSubmit(this.state);
+    this.props.onSubmit(this.state);
     this.setState({
       searchWords: "",
       // searchDates: "",
@@ -39,9 +43,11 @@ class Search extends Component {
               placeholder="Search story titles"
               value={this.state.searchWords}
               onChange={e => this.change(e)}
+              // onChange={e => this.setState({searchWords: e.target.value})}
             ></input>
             <button onClick={e => this.onSubmit(e)}>Search</button>
           </form>
+          <h2>You searched: {this.state.searchWords}</h2>
           <br/>
           {/* <form>
             <input
