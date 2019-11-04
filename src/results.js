@@ -6,40 +6,20 @@ class Results extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      fields: {},
       stories: [],
       // searchWords: null
     }
   }
 
-  componentDidMount() {
-    this.fetchStories();
-  }
+  // componentDidMount() {
+  //   App.fetchStories();
+  // }
 
-  fetchStories() {
-    fetch (`http://hn.algolia.com/api/v1/search?query=${`obama`}&tags=story`)
-    // ${this.props.searchWords(this.state.homeLink)}
-    // below is fetch for word "obama" for testing
-    // fetch (`http://hn.algolia.com/api/v1/search?query=obama&tags=story`)
-    .then(response => response.json())
-    .then(parsedJSON => parsedJSON.hits.map (story => ({
-      timeCreatedUnix: `${story.created_at_i}`,
-      timeCreatedClock: `${story.created_at}`,
-      title: `${story.title}`,
-      author: `${story.author}`,
-      url: `${story.url}`,
-      points: `${story.points}`
-    })))
-    .then(stories => this.setState({
-      stories,
-      // trying for line to below to check if searchWords is blank... if so, don't setState
-      // searchWords: !""
-    }))
-    .catch(error => console.log("search parsing failed", error))
-  }
+  // fetchStories used to be here...
 
   render() {
-    const stories = this.state.stories;
+    // ! WHAT NEEDS TO CHANGE SINCE I MOVED fetchStories() to main?? !
+    const stories = this.props.stories;
 
     console.log(stories.length)
 
