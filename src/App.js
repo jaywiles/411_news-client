@@ -15,15 +15,6 @@ class App extends Component {
     }
   }
 
-  onChange = updatedValue => {
-    this.setState({
-      fields: {
-        ...this.state.fields,
-        ...updatedValue
-      }
-    })
-  }
-
   componentDidMount() {
     this.fetchStories();
   }
@@ -65,6 +56,15 @@ class App extends Component {
   //   });
   // }
 
+  onChange = updatedValue => {
+    this.setState({
+      fields: {
+        ...this.state.fields,
+        ...updatedValue
+      }
+    })
+  }
+
   showResults = storyList => {
     this.setState({
       stories: {
@@ -75,6 +75,7 @@ class App extends Component {
   }
 
   render() {
+    // const stories = this.state.stories;
     return (
       <div className="container">
         <h1>Search stories</h1>
