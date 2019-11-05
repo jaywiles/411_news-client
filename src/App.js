@@ -36,7 +36,7 @@ class App extends Component {
     this.fetchAuthor(this.state.searchAuthor)
   }
 
-  fetchWords() = (search) => {
+  fetchWords = (search) => {
     fetch (`http://hn.algolia.com/api/v1/search?query=${search}&tags=story`)
     // below is fetch for word "obama" for testing
     // fetch (`http://hn.algolia.com/api/v1/search?query=obama&tags=story`)
@@ -46,115 +46,134 @@ class App extends Component {
     .then(data => {
       if (data.hits.length > 0) {
         this.setState({stories: data.hits})
+      } else {
+        this.setState("No results found. Please search again.")
       }
     })
 
     // option 2
-    .then(parsedJSON => {
-      if (data.hits.length > 0) {
-        parsedJSON.hits.map (story => ({
-          timeCreatedUnix: `${story.created_at_i}`,
-          timeCreatedClock: `${story.created_at}`,
-          title: `${story.title}`,
-          author: `${story.author}`,
-          url: `${story.url}`,
-          points: `${story.points}`
-        }))
-      }
-    })
+    // .then(parsedJSON => {
+    //   if (data.hits.length > 0) {
+    //     parsedJSON.hits.map (story => ({
+    //       timeCreatedUnix: `${story.created_at_i}`,
+    //       timeCreatedClock: `${story.created_at}`,
+    //       title: `${story.title}`,
+    //       author: `${story.author}`,
+    //       url: `${story.url}`,
+    //       points: `${story.points}`
+    //     }))
+    //   }
+    // })
 
     // def put this at the bottom of option 2
-    .then(stories => this.setState({
-      stories,
-    }))
+    // .then(stories => this.setState({
+    //   stories,
+    // }))
     .catch(error => console.log("Parsing failed: ", error))
   }
 
-  fetchDate() = (search) => {
+  fetchDate = (search) => {
     fetch (`http://hn.algolia.com/api/v1/search_by_date?query=${search}&tags=story`)
     .then(response => response.json())
-    .then(parsedJSON => {
+    .then(data => {
       if (data.hits.length > 0) {
-        parsedJSON.hits.map (story => ({
-        timeCreatedUnix: `${story.created_at_i}`,
-        timeCreatedClock: `${story.created_at}`,
-        title: `${story.title}`,
-        author: `${story.author}`,
-        url: `${story.url}`,
-        points: `${story.points}`
-      }))
-    }
-  })
-    .then(stories => this.setState({
-      stories,
-    }))
+        this.setState({stories: data.hits})
+      } else {
+        this.setState("No results found. Please search again.")
+      }
+    })
+  //   .then(parsedJSON => {
+  //     if (data.hits.length > 0) {
+  //       parsedJSON.hits.map (story => ({
+  //       timeCreatedUnix: `${story.created_at_i}`,
+  //       timeCreatedClock: `${story.created_at}`,
+  //       title: `${story.title}`,
+  //       author: `${story.author}`,
+  //       url: `${story.url}`,
+  //       points: `${story.points}`
+  //     }))
+  //   }
+  // })
+    // .then(stories => this.setState({
+    //   stories,
+    // }))
     .catch(error => console.log("Parsing failed: ", error))
   }
 
-  fetchAuthor() = (search) => {
+  fetchAuthor = (search) => {
     fetch (`http://hn.algolia.com/api/v1/search?tags=author_${search}&tags=story`)
     .then(response => response.json())
-    .then(parsedJSON => {
+    .then(data => {
       if (data.hits.length > 0) {
-        parsedJSON.hits.map (story => ({
-        timeCreatedUnix: `${story.created_at_i}`,
-        timeCreatedClock: `${story.created_at}`,
-        title: `${story.title}`,
-        author: `${story.author}`,
-        url: `${story.url}`,
-        points: `${story.points}`
-      }))
-    }
-  })
-    .then(stories => this.setState({
-      stories,
-    }))
+        this.setState({stories: data.hits})
+      } else {
+        this.setState("No results found. Please search again.")
+      }
+    })
+  //   .then(parsedJSON => {
+  //     if (data.hits.length > 0) {
+  //       parsedJSON.hits.map (story => ({
+  //       timeCreatedUnix: `${story.created_at_i}`,
+  //       timeCreatedClock: `${story.created_at}`,
+  //       title: `${story.title}`,
+  //       author: `${story.author}`,
+  //       url: `${story.url}`,
+  //       points: `${story.points}`
+  //     }))
+  //   }
+  // })
+    // .then(stories => this.setState({
+    //   stories,
+    // }))
     .catch(error => console.log("Parsing failed: ", error))
   }
 
   render() {
+    // const stories = this.state.stories;
+
     return (
       <div className="page-container">
         <div className="form-container">
           <form>
-              <input
-                name='searchWords'
-                placeholder="Search story titles"
-                value={this.state.searchWords}
-                onChange={this.onChange}
-                // onChange={e => this.setState({searchWords: e.target.value})}
-              ></input>
-              <button onClick={this.searchWordsSubmit}>Search</button>
-            </form>
-            <br/>
-            <form>
-              <input
-                name='searchDates'
-                type='date'
-                placeholder="Search story dates"
-                value={this.state.searchDates}
-                onChange={this.onChange}
-              ></input>
-              <button onClick={this.searchDatesSubmit}>Search</button>
-            </form>
-            <br/>
-            <form>
-              <input
-                name='searchAuthor'
-                placeholder="Search story authors"
-                value={this.state.searchAuthor}
-                onChange={this.onChange}
-              ></input>
-              <button onClick={this.searchAuthorSubmit}>Search</button>
+            <input
+              name='searchWords'
+              placeholder="Search story titles"
+              value={this.state.searchWords}
+              onChange={this.onChange}
+              // onChange={e => this.setState({searchWords: e.target.value})}
+            ></input>
+            <button onClick={this.searchWordsSubmit}>Search</button>
+          </form>
+          <br/>
+          <form>
+            <input
+              name='searchDates'
+              type='date'
+              placeholder="Search story dates"
+              value={this.state.searchDates}
+              onChange={this.onChange}
+            ></input>
+            <button onClick={this.searchDatesSubmit}>Search</button>
+          </form>
+          <br/>
+          <form>
+            <input
+              name='searchAuthor'
+              placeholder="Search story authors"
+              value={this.state.searchAuthor}
+              onChange={this.onChange}
+            ></input>
+            <button onClick={this.searchAuthorSubmit}>Search</button>
           </form>
           <h2>You searched: {this.state.search}</h2>
         </div>
-        <div>
+        <div className="results-container">
+          {console.log(`is this right: `, this.state.stories)}
           {this.state.stories.map ((stories, i) => {
             return (
               <div key={i+1}>
                 <p><a href={stories.url}>{stories.title}</a> by {stories.author}</p>
-                <p>Published: {stories.date}</p>
+                <p>Published: {stories.created_at}</p>
               </div>
             )
           })}
@@ -162,10 +181,6 @@ class App extends Component {
       </div>
     )
   }
-
-
-
-
 }
 
 
