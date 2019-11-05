@@ -106,18 +106,18 @@ class App extends Component {
             ></input>
             <button onClick={this.searchAuthorSubmit}>Search</button>
           </form>
-          <h2>You searched: {this.state.search}</h2>
+          {/* <h2>You searched: {this.state.search}</h2> */}
         </div>
         <div className="results-container">
-          {console.log(`is this right: `, this.state.stories)}
-          {this.state.stories.map ((stories, i) => {
-            return (
+          {/* {console.log(`is this right: `, this.state.stories)} */}
+          {this.state.stories.map ((stories, i) => (
+            <div>
               <div key={i+1}>
                 <p><a href={stories.url}>{stories.title}</a> by {stories.author}</p>
                 <p>Published: {stories.created_at}</p>
               </div>
-            )
-          })}
+            </div>
+          ))}
         </div>
       </div>
     )
