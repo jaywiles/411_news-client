@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
-// import logo from './logo.svg';
 import './App.css';
-// import Search from "./search"
-// import Results from "./results"
 
 class App extends Component {
   constructor(props) {
@@ -38,11 +35,7 @@ class App extends Component {
 
   fetchWords = (search) => {
     fetch (`http://hn.algolia.com/api/v1/search?query=${search}&tags=story`)
-    // below is fetch for word "obama" for testing
-    // fetch (`http://hn.algolia.com/api/v1/search?query=obama&tags=story`)
     .then(response => response.json())
-    
-    // option 1
     .then(data => {
       if (data.hits.length > 0) {
         this.setState({stories: data.hits})
@@ -50,25 +43,6 @@ class App extends Component {
         this.setState("No results found. Please search again.")
       }
     })
-
-    // option 2
-    // .then(parsedJSON => {
-    //   if (data.hits.length > 0) {
-    //     parsedJSON.hits.map (story => ({
-    //       timeCreatedUnix: `${story.created_at_i}`,
-    //       timeCreatedClock: `${story.created_at}`,
-    //       title: `${story.title}`,
-    //       author: `${story.author}`,
-    //       url: `${story.url}`,
-    //       points: `${story.points}`
-    //     }))
-    //   }
-    // })
-
-    // def put this at the bottom of option 2
-    // .then(stories => this.setState({
-    //   stories,
-    // }))
     .catch(error => console.log("Parsing failed: ", error))
   }
 
@@ -82,21 +56,6 @@ class App extends Component {
         this.setState("No results found. Please search again.")
       }
     })
-  //   .then(parsedJSON => {
-  //     if (data.hits.length > 0) {
-  //       parsedJSON.hits.map (story => ({
-  //       timeCreatedUnix: `${story.created_at_i}`,
-  //       timeCreatedClock: `${story.created_at}`,
-  //       title: `${story.title}`,
-  //       author: `${story.author}`,
-  //       url: `${story.url}`,
-  //       points: `${story.points}`
-  //     }))
-  //   }
-  // })
-    // .then(stories => this.setState({
-    //   stories,
-    // }))
     .catch(error => console.log("Parsing failed: ", error))
   }
 
@@ -110,27 +69,10 @@ class App extends Component {
         this.setState("No results found. Please search again.")
       }
     })
-  //   .then(parsedJSON => {
-  //     if (data.hits.length > 0) {
-  //       parsedJSON.hits.map (story => ({
-  //       timeCreatedUnix: `${story.created_at_i}`,
-  //       timeCreatedClock: `${story.created_at}`,
-  //       title: `${story.title}`,
-  //       author: `${story.author}`,
-  //       url: `${story.url}`,
-  //       points: `${story.points}`
-  //     }))
-  //   }
-  // })
-    // .then(stories => this.setState({
-    //   stories,
-    // }))
     .catch(error => console.log("Parsing failed: ", error))
   }
 
   render() {
-    // const stories = this.state.stories;
-
     return (
       <div className="page-container">
         <div className="form-container">
@@ -140,7 +82,6 @@ class App extends Component {
               placeholder="Search story titles"
               value={this.state.searchWords}
               onChange={this.onChange}
-              // onChange={e => this.setState({searchWords: e.target.value})}
             ></input>
             <button onClick={this.searchWordsSubmit}>Search</button>
           </form>
@@ -183,106 +124,4 @@ class App extends Component {
   }
 }
 
-
-// class App extends Component {
-//   constructor(props) {
-//     super(props);
-//     this.state = {
-//       fields: {},
-//       stories: [],
-//       searchWords: "",
-//       searchDates: "",
-//       searchAuthor: "",
-//       // updatedValue: "obama"
-//     }
-//   }
-
-//   componentDidMount() {
-//     this.fetchStories();
-//   }
-
-//   fetchStories(searchWords) {
-//     fetch (`http://hn.algolia.com/api/v1/search?query=${searchWords}&tags=story`)
-//     // below is fetch for word "obama" for testing
-//     // fetch (`http://hn.algolia.com/api/v1/search?query=obama&tags=story`)
-//     .then(response => response.json())
-//     .then(parsedJSON => parsedJSON.hits.map (story => ({
-//       timeCreatedUnix: `${story.created_at_i}`,
-//       timeCreatedClock: `${story.created_at}`,
-//       title: `${story.title}`,
-//       author: `${story.author}`,
-//       url: `${story.url}`,
-//       points: `${story.points}`
-//     })))
-//     .then(stories => this.setState({
-//       stories,
-//       // trying for line to below to check if searchWords is blank... if so, don't setState
-//       // searchWords: !""
-//     }))
-//     .catch(error => console.log("Parsing failed: ", error))
-//   }
-
-//   onChange = updatedValue => {
-//     this.setState({
-//       fields: {
-//         ...this.state.fields,
-//         ...updatedValue
-//       }
-//     })
-//   }
-
-//   // componentWillReceiveProps() {
-//   //   this.fetchStories();
-//   // }
-
-//   showResults = storyList => {
-//     this.setState({
-//       stories: {
-//         ...this.state.stories,
-//         ...storyList
-//       }
-//     })
-//   }
-
-//   render() {
-//     const stories = this.state.stories;
-//     return (
-//       <div className="container">
-//         <h1>Search stories</h1>
-//         {/* <div homeLink={this.state.homeLink}></div> */}
-//         <Search onSubmit={fields => this.onChange(fields)}></Search>
-//         <Results showResults={this.state.stories}>{console.log(this.state.stories.length)}</Results>
-//       </div>
-//     )
-//   }
-// }
-
 export default App;
-
-
-
-
-// render() {
-  // const stories = this.state.stories;
-
-
-  // need else if here to say else if submit has not been pushed, don't show anything
-// }
-
-
-
-
-  // onSubmit = updatedValue => {
-  //   this.setState({
-  //     fields: {
-  //       ...this.state.fields,
-  //       ...updatedValue
-  //     }
-  //   })
-  // }
-
-  // onChangeValue(newName) {
-  //   this.setState({
-  //     homeLink: newName
-  //   });
-  // }
